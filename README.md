@@ -21,3 +21,25 @@ The dataset used in this project is sourced from [Kaggle](https://www.kaggle.com
 ### About the Dataset
 * **Context:** edX is a massive open online course (MOOC) provider founded by Harvard and MIT. It hosts a wide range of online university-level courses in different disciplines.
 * **Content:** The dataset contains information about 976 courses that are currently available on the edx.org platform.
+
+## Web Application
+The project also has a web application using Streamlit that allows you to interact with the Open Online Course Recommender in a user-friendly way. The web app allows you to select a course and receive recommendations for similar courses based on the course tags.
+![alt text](https://github.com/fizamusthafa/mooc-recommender-nlp/blob/master/assets/example-02.png)
+
+## Discussion
+In the process of developing the Open Online Course Recommender, I modified the recommendation algorithm to provide more focused results within the same subject area. The *recommend* function was modified as follows:
+```
+def recommend(mooc_title):
+    index = newdf[newdf['title'].str.lower() == mooc_title.lower()].index[0]
+    distances = sorted(enumerate(similarity[index]), reverse=True, key=lambda x: x[1])
+    selected_course = newdf.loc[index]
+    
+    # Filter recommended courses by the same subject as the selected course
+    similar_courses = [
+        newdf.iloc[i[0]] for i in distances[1:6]
+        if selected_course.displayed_subject in newdf.iloc[i[0]].displayed_subject
+    ]
+    
+    return similar_courses
+```
+However, it was observed that this modification led to limited recommendations. This limitation is attributed to the relatively small size of the dataset, resulting in a scarcity of courses within the same subject area. Consequently, this leads to a reduced number of recommendations. This situation underscores the critical importance of utilizing a diverse and comprehensive dataset to achieve higher accuracy in recommendations.
