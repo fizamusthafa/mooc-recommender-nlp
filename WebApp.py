@@ -17,6 +17,7 @@ with open('design.css', 'r') as css_file:
     css_code = css_file.read()
 
 # Streamlit UI
+st.set_page_config(layout="wide")
 st.title('Open Online Course Recommender')
 
 mooc_list = newdf['title'].tolist()
@@ -27,15 +28,20 @@ if st.button('Recommend'):
         recommended_courses = recommend(selected_mooc)
         if recommended_courses:
             st.markdown(f'<style>{css_code}</style>', unsafe_allow_html=True)
-            for course in recommended_courses:
-                st.markdown(
-                    f'<div class="recommended-course">'
-                    f'<h3 class="course-title">{course.title}</h3>'
-                    f'<p class="course-info"><strong>Subject:</strong> {course.displayed_subject}</p>'
-                    f'<p class="course-info"><strong>Summary:</strong> {course.displayed_summary}</p>'
-                    f'</div>',
-                    unsafe_allow_html=True
-                )
+           # Create columns for recommendations
+            cols = st.columns(4)  # You can adjust the number of columns
+            
+            for i, course in enumerate(recommended_courses):
+                with cols[i % 4]:
+                    st.markdown(
+                        f'<div class="recommended-course">'
+                        f'<h3 class="course-title">{course.title}</h3>'
+                        f'<p class="course-info"><strong>Subject:</strong> {course.displayed_subject}</p>'
+                        f'<p class="course-info"><strong>Summary:</strong> {course.displayed_summary}</p>'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+            
             st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.write('No recommendations found for the selected course.')
