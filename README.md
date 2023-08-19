@@ -16,7 +16,6 @@ The Open Online Course Recommender employs various natural language processing (
 * **Cosine Similarity**: Cosine similarity is used to measure the similarity between courses based on their vectorized representations. Courses with similar content will have a higher cosine similarity score, indicating their relevance to each other.
 
 ## Dataset
-[Whisper Automatic Speech Recognition (ASR) model](https://github.com/openai/whisper)
 The dataset used in this project is sourced from [Kaggle](https://www.kaggle.com/datasets/imuhammad/edx-courses). The dataset contains information about 976 courses that are currently available on the edx.org platform. It provides insights into various online university-level courses across different disciplines.
 
 ### About the Dataset
